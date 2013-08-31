@@ -40,18 +40,8 @@ public class TeleportaJogador : MonoBehaviour {
 	
 	void OnDrawGizmos(){
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawRay(ray);
 		
 		Matrix4x4 m = Camera.main.cameraToWorldMatrix;
 		Vector3 p = m.MultiplyPoint(sensor.position);
-		
-		///Camera.main.WorldToScreenPoint(sensor.position)
-		
-		//Gizmos.DrawWireSphere(p, 2f);
-		
-		//Gizmos.DrawLine(p, sensor.position);
-		
-		//Gizmos.DrawWireSphere(colisao.point, 2f);
-		
 	}
 }

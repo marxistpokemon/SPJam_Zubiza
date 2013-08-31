@@ -4,10 +4,11 @@ using System.Collections;
 public class MovimentoJogador : MonoBehaviour {
 	
 	public Vector3 input;
-	public float velocidade;
-	public float velocidadeMaxima;
 	
-	public float dragChao = 0.5f;
+	public float velocidadeMaxima;
+	public float velocidadeChao;
+	public float velocidadeAr;
+	public float gravidade = -9.81f;
 	
 	public float poderDoPulo = 10f;
 	public bool podePular = false;
@@ -49,13 +50,14 @@ public class MovimentoJogador : MonoBehaviour {
 			rigidbody.AddForce(new Vector3(0, poderDoPulo, 0), ForceMode.VelocityChange);
 		}
 		
-		_rigidbody.AddForce(input*Time.fixedDeltaTime*velocidade, 
-			ForceMode.VelocityChange);
-		
-		if(_rigidbody.velocity.magnitude > velocidadeMaxima)
-        {
-               _rigidbody.velocity = _rigidbody.velocity.normalized * velocidadeMaxima;
-        }
+		if(pulando){
+			_rigidbody.AddForce(input*Time.fixedDeltaTime*velocidadeAr, 
+				ForceMode.VelocityChange);
+		}
+		else {
+			_rigidbody.AddForce(input*Time.fixedDeltaTime*velocidadeChao, 
+				ForceMode.VelocityChange);
+		}
 			
 	}
 	
