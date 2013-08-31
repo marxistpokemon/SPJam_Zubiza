@@ -13,6 +13,7 @@ public class TrocaPerspectiva : MonoBehaviour {
 	public int perspAtual = 0;
 	public float duracaoRotacao = 0.5f;
 	public bool trocou = false;
+	public bool trocando = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -41,22 +42,30 @@ public class TrocaPerspectiva : MonoBehaviour {
 				case (int)Perspectivas.FRENTE :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
 					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,0,0))));
+					.rotation(Quaternion.Euler(new Vector3(0,0,0)))
+					.onStart(start => trocando = true)
+					.onComplete(complete => trocando = false));
 					break;
 				case (int)Perspectivas.DIREITA :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
 					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,90,0))));
+					.rotation(Quaternion.Euler(new Vector3(0,90,0)))
+					.onStart(start => trocando = true)
+					.onComplete(complete => trocando = false));
 					break;
 				case (int)Perspectivas.TRAS :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
 					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,180,0))));
+					.rotation(Quaternion.Euler(new Vector3(0,180,0)))
+					.onStart(start => trocando = true)
+					.onComplete(complete => trocando = false));
 					break;
 				case (int)Perspectivas.ESQUERDA :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
 					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,270,0))));
+					.rotation(Quaternion.Euler(new Vector3(0,270,0)))
+					.onStart(start => trocando = true)
+					.onComplete(complete => trocando = false));
 					break;
 			}
 		}
