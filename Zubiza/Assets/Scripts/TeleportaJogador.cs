@@ -13,6 +13,7 @@ public class TeleportaJogador : MonoBehaviour {
 	private Transform meuTransform;
 	private Vector3 sensorPosRelCamera;
 	private TrocaPerspectiva controleTroca;
+	public Material novoMaterial;
 	
 	// Use this for initialization
 	void Start () {
@@ -40,6 +41,7 @@ public class TeleportaJogador : MonoBehaviour {
 			!GetComponent<CharacterMotor>().IsGrounded() &&
 			!controleTroca.trocando){
 			Debug.Log ("colidiu");
+			colisao.transform.renderer.material = novoMaterial;
 			Vector3 novaPosicao = new Vector3(
 				colisao.point.x,
 				meuTransform.position.y,
