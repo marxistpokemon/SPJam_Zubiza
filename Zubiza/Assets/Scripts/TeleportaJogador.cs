@@ -9,17 +9,22 @@ public class TeleportaJogador : MonoBehaviour {
 	public Ray ray;
 	public RaycastHit colisao;
 	
+	public float raioTeleporte = 10f;
 	private Transform meuTransform;
 	private Vector3 sensorPosRelCamera;
+	private TrocaPerspectiva controleTroca;
 	
 	// Use this for initialization
 	void Start () {
 		sensor = GameObject.Find("SensorTeleporte").transform;
 		meuTransform = transform;
+		controleTroca = GameObject.Find("Mundo").GetComponent<TrocaPerspectiva>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		transform.rotation = Quaternion.identity;
 		
 		//ray = Camera.main.ScreenPointToRay(sensor.position);
 		
@@ -28,21 +33,18 @@ public class TeleportaJogador : MonoBehaviour {
 			sensor.position.y,
 			Camera.main.transform.position.z);
 		
-		ray = new Ray(sensorPosRelCamera,  Camera.main.transform.forward);
+		ray = new Ray(sensorPosRelCamera, Camera.main.transform.forward);
 		
-		
-		
-		if(Physics.Raycast(ray, out colisao, 1000f) &&
-			!GetComponent<CharacterMotor>().IsGrounded()){
+		if(Physics.Raycast(ray, out colisao, Vector3.Distance(Camera.main.transform.position, 
+			transform.position)+GameManager.instance.raio) &&
+			!GetComponent<CharacterMotor>().IsGrounded() &&
+			!controleTroca.trocando){
 			Debug.Log ("colidiu");
 			Vector3 novaPosicao = new Vector3(
 				colisao.point.x,
-				meuTransform.position.y+0.3f,
-				colisao.point.z+offsetZ);
+				meuTransform.position.y,
+				colisao.transform.position.z);
 			meuTransform.position = novaPosicao;
-			
-//			// trava a rotacao do personagem
-//			meuTransform.rotation = Quaternion.identity;
 		}
 	
 	}
@@ -51,8 +53,8 @@ public class TeleportaJogador : MonoBehaviour {
 		Gizmos.DrawLine(sensorPosRelCamera, new Vector3(
 			sensorPosRelCamera.x,
 			sensorPosRelCamera.y,
-			sensorPosRelCamera.z+1000f));
-		Gizmos.DrawWireSphere(colisao.point, 2f);
+			sensorPosRelCamera.z));
+		Gizmos.DrawWireSphere(sensor.position, raioTeleporte);
 	}
 
 }

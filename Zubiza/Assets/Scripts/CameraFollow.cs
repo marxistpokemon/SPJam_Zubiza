@@ -3,12 +3,9 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 	
+	public float offsetZ;
 	public float damping = 1f;
 	public Transform alvo;
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -17,8 +14,7 @@ public class CameraFollow : MonoBehaviour {
 			new Vector3(
 				alvo.position.x,
 				alvo.position.y,
-				transform.position.z
-			),
+				alvo.position.z + offsetZ),
 			Time.deltaTime*damping);
 	}
 }

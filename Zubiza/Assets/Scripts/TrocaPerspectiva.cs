@@ -15,19 +15,23 @@ public class TrocaPerspectiva : MonoBehaviour {
 	public bool trocou = false;
 	public bool trocando = false;
 	
+	private CharacterController jogador;
+	
 	// Use this for initialization
 	void Start () {
 		perspAtual = 0;	
+		jogador = GameObject.Find("Jogador").GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonUp("TrocaMais")){
+		
+		if(Input.GetButtonUp("TrocaMais") && jogador.isGrounded){
 				perspAtual++;
 				trocou = true;
 		}
 		
-		if(Input.GetButtonUp("TrocaMenos")){
+		if(Input.GetButtonUp("TrocaMenos") && jogador.isGrounded){
 				perspAtual--;
 				trocou = true;
 		}
@@ -39,34 +43,36 @@ public class TrocaPerspectiva : MonoBehaviour {
 			trocou = false;
 			
 			switch(perspAtual){
+				case (int)Perspectivas.TRAS :
 				case (int)Perspectivas.FRENTE :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
-					.setEaseType(GoEaseType.BackInOut)
+					.setEaseType(GoEaseType.QuadInOut)
 					.rotation(Quaternion.Euler(new Vector3(0,0,0)))
 					.onStart(start => trocando = true)
 					.onComplete(complete => trocando = false));
 					break;
+				case (int)Perspectivas.ESQUERDA :
 				case (int)Perspectivas.DIREITA :
 					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
-					.setEaseType(GoEaseType.BackInOut)
+					.setEaseType(GoEaseType.QuadInOut)
 					.rotation(Quaternion.Euler(new Vector3(0,90,0)))
 					.onStart(start => trocando = true)
 					.onComplete(complete => trocando = false));
 					break;
-				case (int)Perspectivas.TRAS :
-					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
-					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,180,0)))
-					.onStart(start => trocando = true)
-					.onComplete(complete => trocando = false));
-					break;
-				case (int)Perspectivas.ESQUERDA :
-					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
-					.setEaseType(GoEaseType.BackInOut)
-					.rotation(Quaternion.Euler(new Vector3(0,270,0)))
-					.onStart(start => trocando = true)
-					.onComplete(complete => trocando = false));
-					break;
+				
+//					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
+//					.setEaseType(GoEaseType.BackInOut)
+//					.rotation(Quaternion.Euler(new Vector3(0,180,0)))
+//					.onStart(start => trocando = true)
+//					.onComplete(complete => trocando = false));
+//					break;
+//				
+//					Go.to (this.transform, duracaoRotacao, new GoTweenConfig()
+//					.setEaseType(GoEaseType.BackInOut)
+//					.rotation(Quaternion.Euler(new Vector3(0,270,0)))
+//					.onStart(start => trocando = true)
+//					.onComplete(complete => trocando = false));
+//					break;
 			}
 		}
 	}
